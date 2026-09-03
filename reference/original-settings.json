@@ -1,0 +1,217 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "BROWSER": "/usr/bin/open"
+  },
+  "permissions": {
+    "allow": [
+      "mcp__cmem__search_sessions",
+      "mcp__cmem__list_sessions",
+      "mcp__cmem__get_session",
+      "mcp__cmem__get_session_context",
+      "mcp__cmem__search_and_summarize",
+      "mcp__cmem__search_lessons",
+      "mcp__cmem__get_lesson",
+      "mcp__cmem__save_lesson",
+      "mcp__cmem__validate_lesson",
+      "mcp__cmem__reject_lesson",
+      "mcp__cmem__list_lessons"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/Users/ohad.l/work/daily-dash/src/quick-status.js\"",
+            "timeout": 20000
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/Users/ohad.l/.claude/plugins/cache/taboola-marketplace/claude-network-hub/1.6.0/hooks/session-status.sh\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/homebrew/lib/node_modules/@colbymchenry/cmem/dist/hooks/consult.js\"",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/homebrew/lib/node_modules/@colbymchenry/cmem/dist/hooks/sync.js\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/homebrew/lib/node_modules/@colbymchenry/cmem/dist/hooks/sync.js\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/Users/ohad.l/work/bmad_workflows/bmad-agent-metrics/src/capture/hook.sh\"",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "matcher": "TeamCreate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/team-ui/hooks/team-ui-launch.sh\"",
+            "timeout": 10000,
+            "statusMessage": "🎮 Launching Code Crew Dashboard..."
+          }
+        ]
+      },
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/team-ui/hooks/team-ui-agent-joined.sh\"",
+            "timeout": 5000
+          },
+          {
+            "type": "command",
+            "command": "bash \"/Users/ohad.l/work/bmad_workflows/bmad-agent-metrics/src/capture/hook.sh\"",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "matcher": "TaskUpdate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/team-ui/hooks/team-ui-task-completed.sh\"",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "matcher": "TeamDelete",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/team-ui/hooks/team-ui-teardown.sh\"",
+            "timeout": 15000,
+            "statusMessage": "🎮 Archiving session stats..."
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"/Users/ohad.l/.claude/statusline-command.sh\""
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "superpowers-chrome@superpowers-marketplace": true,
+    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
+    "elements-of-style@superpowers-marketplace": true,
+    "superpowers-lab@superpowers-marketplace": true,
+    "episodic-memory@superpowers-marketplace": true,
+    "browser-pilot@dev-gom-plugins": true,
+    "document-skills@anthropic-agent-skills": true,
+    "obsidian@obsidian-skills": true,
+    "scheduler@claude-scheduler": true,
+    "babysitter@a5c.ai": true,
+    "frontend-design@claude-plugins-official": true,
+    "claude-network-hub@taboola-marketplace": true,
+    "coo-analytics@taboola-sales-skills": true,
+    "datastore@taboola-sales-skills": true,
+    "code-truth@taboola-sales-skills": true,
+    "advertiser-spend@taboola-sales-skills": true,
+    "team-review@taboola-marketplace": true,
+    "audience-agents@taboola-marketplace": true,
+    "telegram@claude-plugins-official": true,
+    "elasticsearch-logs@taboola-marketplace": true,
+    "social-media-skills@social-media-skills": true,
+    "fabric@fabric-client": true,
+    "langfuse-cli@taboola-marketplace": true,
+    "deeper-dive-ps-qa@taboola-marketplace": true,
+    "eli5@claude-community": true
+  },
+  "extraKnownMarketplaces": {
+    "taboola-sales-skills": {
+      "source": {
+        "source": "git",
+        "url": "https://git.taboolasyndication.com/scm/playg/taboola-sales-skills.git"
+      }
+    },
+    "taboola-marketplace": {
+      "source": {
+        "source": "file",
+        "path": "/Users/ohad.l/llm_stuff/.claude-plugin/marketplace.json"
+      },
+      "autoUpdate": true
+    },
+    "a5c.ai": {
+      "source": {
+        "source": "github",
+        "repo": "a5c-ai/babysitter"
+      }
+    },
+    "social-media-skills": {
+      "source": {
+        "source": "github",
+        "repo": "charlie947/social-media-skills"
+      }
+    },
+    "fabric-client": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/ohad.l/work/fabric-client"
+      }
+    },
+    "claude-community": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
+      }
+    }
+  },
+  "tui": "fullscreen",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "autoMemoryEnabled": true,
+  "autoDreamEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "voiceEnabled": true
+}

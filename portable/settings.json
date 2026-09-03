@@ -1,0 +1,90 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "BROWSER": "/usr/bin/open"
+  },
+  "permissions": {
+    "allow": [
+      "mcp__cmem__search_sessions",
+      "mcp__cmem__list_sessions",
+      "mcp__cmem__get_session",
+      "mcp__cmem__get_session_context",
+      "mcp__cmem__search_and_summarize",
+      "mcp__cmem__search_lessons",
+      "mcp__cmem__get_lesson",
+      "mcp__cmem__save_lesson",
+      "mcp__cmem__validate_lesson",
+      "mcp__cmem__reject_lesson",
+      "mcp__cmem__list_lessons"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/homebrew/lib/node_modules/@colbymchenry/cmem/dist/hooks/consult.js\"",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/homebrew/lib/node_modules/@colbymchenry/cmem/dist/hooks/sync.js\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/opt/homebrew/lib/node_modules/@colbymchenry/cmem/dist/hooks/sync.js\""
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline-command.sh\""
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "superpowers-chrome@superpowers-marketplace": true,
+    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
+    "elements-of-style@superpowers-marketplace": true,
+    "superpowers-lab@superpowers-marketplace": true,
+    "episodic-memory@superpowers-marketplace": true,
+    "browser-pilot@dev-gom-plugins": true,
+    "document-skills@anthropic-agent-skills": true,
+    "obsidian@obsidian-skills": true,
+    "scheduler@claude-scheduler": true,
+    "babysitter@a5c.ai": true,
+    "frontend-design@claude-plugins-official": true,
+    "telegram@claude-plugins-official": true,
+    "social-media-skills@social-media-skills": true,
+    "eli5@claude-community": true
+  },
+  "extraKnownMarketplaces": {
+    "a5c.ai": { "source": { "source": "github", "repo": "a5c-ai/babysitter" } },
+    "social-media-skills": { "source": { "source": "github", "repo": "charlie947/social-media-skills" } },
+    "claude-community": { "source": { "source": "github", "repo": "anthropics/claude-plugins-community" } }
+  },
+  "tui": "fullscreen",
+  "voice": { "enabled": true, "mode": "hold" },
+  "voiceEnabled": true,
+  "autoMemoryEnabled": true,
+  "autoDreamEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark"
+}
