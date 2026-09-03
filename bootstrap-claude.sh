@@ -38,7 +38,7 @@ add_mp https://github.com/Dev-GOM/claude-code-marketplace.git
 # ---------------------------------------------------------------- plugins
 say "Installing plugins"
 install_pl() {
-  claude plugin install "$1" >/dev/null 2>&1 && echo "  + $1" || echo "  = $1 (already installed or failed — check manually)"
+  claude plugin install -y --scope user "$1" >/dev/null 2>&1 && echo "  + $1" || echo "  = $1 (already installed or failed — check manually)"
 }
 install_pl superpowers@superpowers-marketplace
 install_pl superpowers-chrome@superpowers-marketplace
