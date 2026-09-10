@@ -201,3 +201,16 @@ Conversation history (`~/.claude/projects`, `history.jsonl`), auto-memory,
 the episodic-memory index and the `~/.config/superpowers` archive all stay behind.
 They're thick with previous-employer project detail and none of it helps on the new
 machine. Episodic memory and cmem both rebuild themselves from day one.
+
+## Reachy Mini pack (separate, optional)
+
+Personal robot tooling lives in `reachy-mini/` with its own installer because it
+is hobby-scoped and carries home-LAN addresses that don't belong in the general
+bootstrap:
+
+```bash
+cd ~/claude-config/reachy-mini && ./install.sh
+```
+
+See `reachy-mini/README.md` for contents, prerequisites, and the secrets you
+must recreate (`~/.reachy_vault_token`, `~/.openclaw_openai_key`).
