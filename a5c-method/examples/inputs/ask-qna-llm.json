@@ -1,0 +1,6 @@
+{
+  "question": "How does QuestionGenerationPipeline choose and call the LLM provider?",
+  "targetScore": 90,
+  "maxIterations": 4,
+  "autoContinue": true
+}

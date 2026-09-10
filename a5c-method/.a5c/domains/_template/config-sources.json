@@ -1,0 +1,23 @@
+{
+  "id": "example-config",
+  "description": "Optional live config stores (feature flags, pub settings). Omit or empty stores if the domain has none.",
+  "requiredWhen": [
+    "Answer claims production/runtime behavior that may be flag-gated"
+  ],
+  "tool": {
+    "name": "multi-sql-mcp",
+    "cli": "multi-sql-mcp",
+    "cursorMcp": "multi-sql-mcp",
+    "notes": "Configure connections for this domain, or leave tool null if N/A"
+  },
+  "connections": [],
+  "stores": [],
+  "knownAttributes": {},
+  "citationFormat": {
+    "path": "db:<connection>/<database>.<table>#<key>",
+    "example": "db:mysql-prod/trc.publisher_config#some-flag"
+  },
+  "queryRules": [
+    "If stores is empty, skip live-config checks and score live-config N/A via summary note"
+  ]
+}

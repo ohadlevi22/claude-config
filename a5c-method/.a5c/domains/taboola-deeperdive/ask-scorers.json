@@ -1,0 +1,32 @@
+[
+  {
+    "id": "dd-architecture-accuracy",
+    "kind": "agent",
+    "title": "Deeper Dive architecture accuracy",
+    "phase": "review",
+    "scope": "domain",
+    "skillRefs": ["deeperdive-architecture", "deeperdive-search-engine", "deeperdive-data"],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "Conflates trs-search-engine / search-engine-qna / trs-llm-gateway responsibilities → score < 90",
+      "Wrong cache layers or Kafka topic names vs domain skills/code → score < 90",
+      "Ignores known live-config overrides that change the described flow (when configLookups present) → score < 90"
+    ],
+    "rubric": {
+      "90": "Service boundaries and data flow match Deeper Dive reality",
+      "70": "Mostly right; small naming/boundary slips",
+      "40": "Material architecture confusion",
+      "0": "Wrong product model"
+    },
+    "prompt": {
+      "role": "Deeper Dive architect reviewing an explanation",
+      "task": "Score whether the answer correctly describes Deeper Dive services and flows",
+      "instructions": [
+        "Use skillRefs and codebasePath to check service names, pipelines, cache layers, Kafka topics",
+        "Apply failFast and rubric",
+        "Score 0-100; 90+ means architecture explanation is safe to rely on"
+      ]
+    }
+  }
+]

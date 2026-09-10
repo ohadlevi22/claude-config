@@ -1,0 +1,134 @@
+[
+  {
+    "id": "evidence",
+    "kind": "agent",
+    "title": "Evidence & citations",
+    "phase": "review",
+    "scope": "base",
+    "skillRefs": [],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "Answer has no concrete file paths under codebasePath (and no db: citations when only config is relevant) → score < 90",
+      "Citations cannot be located or do not support the claim → score < 90"
+    ],
+    "rubric": {
+      "90": "Every material claim is backed by a real file/path, db: citation, and/or skill ref",
+      "70": "Mostly cited; a few soft claims lack pointers",
+      "40": "Thin evidence; heavy reliance on general knowledge",
+      "0": "No verifiable sources"
+    },
+    "prompt": {
+      "role": "research auditor",
+      "task": "Score whether the answer is grounded in real codebase, skill, and live-config sources",
+      "instructions": [
+        "Require citations: repo-relative paths under codebasePath (prefer path + symbol/class or short quote)",
+        "Accept live-config citations of the form db:<connection>/<database>.<table>#<key> when domain has configSources",
+        "Open cited files and verify they exist and support the claim; for db: citations require matching configLookups",
+        "Skill pointers used should be named when domain docs were relied on",
+        "Apply failFast and rubric",
+        "Score 0-100; 90+ means a human can re-check the answer from citations alone"
+      ]
+    }
+  },
+  {
+    "id": "faithfulness",
+    "kind": "agent",
+    "title": "Faithfulness to sources",
+    "phase": "review",
+    "scope": "base",
+    "skillRefs": [],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "Any claim contradicts the cited code, live config, or domain CONTEXT → score < 90",
+      "Answer invents APIs/services/flags not present in sources → score < 90",
+      "Answer treats Java code defaults as production truth when live config was checked and differs → score < 90"
+    ],
+    "rubric": {
+      "90": "Claims match cited sources (code + config); no inventing",
+      "70": "Mostly faithful; minor overreach",
+      "40": "Material misstatement vs code/docs/config",
+      "0": "Unsafe / fabricated explanation"
+    },
+    "prompt": {
+      "role": "senior engineer checking source fidelity",
+      "task": "Score whether the answer faithfully reflects the codebase, live config, and domain CONTEXT",
+      "instructions": [
+        "Compare each key claim to cited files, configLookups, and domainContext",
+        "Flag hallucinations, outdated assumptions, and conflated services",
+        "If configLookups exist, answers must not contradict them",
+        "Uncertainty must be labeled as such — guessing without a citation fails",
+        "Apply failFast and rubric",
+        "Score 0-100; 90+ means trustworthy for operational decisions"
+      ]
+    }
+  },
+  {
+    "id": "completeness",
+    "kind": "agent",
+    "title": "Answers the question",
+    "phase": "review",
+    "scope": "base",
+    "skillRefs": [],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "Core question unanswered → score < 90",
+      "Critical related path (e.g. call chain) omitted when the question asks how it works → score < 90"
+    ],
+    "rubric": {
+      "90": "Directly answers the question with enough depth for a teammate to act",
+      "70": "Mostly answers; missing secondary but useful detail",
+      "40": "Partial / evasive",
+      "0": "Does not address the question"
+    },
+    "prompt": {
+      "role": "staff engineer judging answer usefulness",
+      "task": "Score whether the answer fully addresses the user's question",
+      "instructions": [
+        "Check the question is answered head-on, not only adjacent trivia",
+        "For how-it-works questions expect flow: entry → key components → data/control path",
+        "When runtime flags matter, completeness includes stating code default vs live overrides",
+        "Apply failFast and rubric",
+        "Score 0-100; 90+ means ready to share with confidence"
+      ]
+    }
+  },
+  {
+    "id": "live-config",
+    "kind": "agent",
+    "title": "Live config / flags verified",
+    "phase": "review",
+    "scope": "base",
+    "skillRefs": [],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "domainContext.hasLiveConfig and answer asserts production/runtime flag behavior without configLookups → score < 90",
+      "Known flag-gated claim (enablement, caps, thresholds, similar-articles, fail-fast) cites only code default and ignores configSources → score < 90",
+      "configLookups report values that contradict the answer prose → score < 90",
+      "Invented DB rows / attribute names not in configSources or code → score < 90"
+    ],
+    "rubric": {
+      "90": "Flag-sensitive claims checked against live config (or explicitly marked unchecked with why)",
+      "70": "Partial lookup; missing an important related attribute",
+      "40": "Relies on code defaults as if they were prod truth",
+      "0": "Ignores configSources entirely on a flag-gated question"
+    },
+    "prompt": {
+      "role": "config auditor",
+      "task": "Score whether runtime/publisher/common config was verified when it can change the answer",
+      "instructions": [
+        "Read domainContext.configSources (stores, knownAttributes, queryRules, citationFormat)",
+        "If hasLiveConfig is false or stores empty: score 100 with summary 'N/A — no config sources for domain'",
+        "If the question/answer is pure code structure with no flag effect: score 90+ only if answer correctly says config is irrelevant (or still did a quick knownAttributes check)",
+        "Otherwise require configLookups (SQL + connection + result summary) and db: citations",
+        "Distinguish: (1) Java Proxy fallback, (2) common.config setting, (3) publisher_config override",
+        "Re-query or demand re-query if lookups are missing for attributes named in the answer",
+        "Apply failFast and rubric",
+        "Score 0-100; 90+ means a teammate would not be misled by stale flag assumptions"
+      ]
+    }
+  }
+]

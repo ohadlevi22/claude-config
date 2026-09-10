@@ -1,0 +1,6 @@
+{
+  "question": "How does trs-search-engine handle a DeeperDive cache miss for generated questions?",
+  "targetScore": 90,
+  "maxIterations": 4,
+  "autoContinue": true
+}

@@ -1,0 +1,99 @@
+[
+  {
+    "id": "correctness",
+    "kind": "agent",
+    "title": "Correctness vs acceptance criteria",
+    "phase": "review",
+    "scope": "base",
+    "skillRefs": [],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "Any stated requirement or acceptance criterion clearly unmet → score < 90",
+      "Behavior contradicts the goal on the primary happy path → score < 90"
+    ],
+    "rubric": {
+      "90": "Change meets goal and acceptance criteria; ready for human CR on correctness",
+      "70": "Mostly meets goal; missing edge cases or secondary requirements (mustFix non-empty)",
+      "40": "Primary behavior wrong or major requirements missing",
+      "0": "Does not implement the requested goal"
+    },
+    "prompt": {
+      "role": "senior engineer validating correctness",
+      "task": "Score whether the change meets the stated goal and acceptance criteria",
+      "instructions": [
+        "Compare the PR diff and implied behavior against the goal and requirements only",
+        "Verify by reading the real files under domain codebasePath — do not score from the goal text alone",
+        "Do not apply company-specific or language-framework rules here (other scorers own those)",
+        "Flag missing requirements, wrong behavior, and incomplete edge cases called out by the goal",
+        "Apply failFast and rubric from this scorer declaration",
+        "Give score 0-100 where 90+ means clearly shippable for human review on correctness",
+        "List mustFix items for anything that keeps the score below 90"
+      ]
+    }
+  },
+  {
+    "id": "code-quality",
+    "kind": "agent",
+    "title": "Code quality",
+    "phase": "review",
+    "scope": "base",
+    "skillRefs": [],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "Change introduces clear dead code or unreachable paths in the touched area → score < 90",
+      "Structure is unreadable or inconsistent with surrounding modules in a way that blocks review → score < 90"
+    ],
+    "rubric": {
+      "90": "Clarity, structure, and API fit are ready for human CR",
+      "70": "Readable but with maintainability debt that should be fixed before merge pressure",
+      "40": "Hard to follow, leaky abstractions, or large unnecessary complexity",
+      "0": "Unmaintainable or unsafe structure"
+    },
+    "prompt": {
+      "role": "senior engineer focused on maintainability",
+      "task": "Score clarity, structure, API fit, and dead code in the change",
+      "instructions": [
+        "Assess readability, naming, modularity, and consistency with surrounding code",
+        "Flag dead code, leaky abstractions, and unnecessary complexity",
+        "Keep this portable: do not apply Taboola-specific Java/Spring rulebooks (domain java-quality owns that)",
+        "Apply failFast and rubric from this scorer declaration",
+        "Give score 0-100 where 90+ means quality is ready for human review",
+        "List mustFix items for quality blockers"
+      ]
+    }
+  },
+  {
+    "id": "pr-hygiene",
+    "kind": "agent",
+    "title": "PR hygiene",
+    "phase": "review",
+    "scope": "base",
+    "skillRefs": [],
+    "checklistPaths": [],
+    "appliesWhen": "always",
+    "failFast": [
+      "Secrets or credentials appear in the diff → score < 90",
+      "Behavior change with no tests or verification story when tests are expected for this repo → score < 90",
+      "Diff mixes unrelated concerns so humans cannot review safely → score < 90"
+    ],
+    "rubric": {
+      "90": "PR is reviewable: scope, risk, and tests/verification are adequate for human CR",
+      "70": "Reviewable with gaps (e.g. thin tests or slightly wide scope)",
+      "40": "Hard to review: oversized, risky, or missing essential verification",
+      "0": "Unsafe to put in front of a human reviewer"
+    },
+    "prompt": {
+      "role": "staff engineer reviewing PR shape",
+      "task": "Score PR hygiene: diff size, naming, risky patterns, and missing tests",
+      "instructions": [
+        "Assess whether the PR is reviewable (scope, clarity, test coverage for the change)",
+        "Flag risky patterns, secrets, and missing tests for changed behavior",
+        "Apply failFast and rubric from this scorer declaration",
+        "Give score 0-100 where 90+ means hygiene is ready for human review",
+        "List mustFix items for hygiene blockers"
+      ]
+    }
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "id": "example-skill",
+    "title": "Example skill context",
+    "path": "path/to/skill/context/component-context.md",
+    "when": ["implement", "review", "score"]
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "targetScore": 90,
+  "maxIterations": 5,
+  "createPr": true
+}

@@ -1,0 +1,7 @@
+{
+  "plan": "gpt-5.6-sol",
+  "execute": "gpt-5.6-sol",
+  "fix": "gpt-5.6-sol",
+  "review": "fable",
+  "_comment": "EXAMPLE — replace with your babysitter/A5C model IDs. Personal; do not treat as shared org defaults."
+}
