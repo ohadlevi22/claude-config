@@ -1,4 +1,4 @@
 {
-  "domain": "taboola-deeperdive",
-  "_comment": "EXAMPLE — switch to another pack under domains/ or your own domain id"
+  "domain": "example-domain",
+  "_comment": "EXAMPLE — copy domains/_template to domains/<your-id> and point active-domain here"
 }

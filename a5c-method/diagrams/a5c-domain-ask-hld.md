@@ -25,9 +25,9 @@ flowchart TD
 | Layer | Scorers |
 |-------|---------|
 | Base | evidence · faithfulness · completeness · live-config |
-| Taboola DD | dd-architecture-accuracy |
+| Domain | overlays from `domains/<id>/ask-scorers.json` |
 
-**Live config:** domain `config-sources.json` (e.g. `multi-sql-mcp` → `trc.publisher_config` / `common.config`). Flag-gated claims need `configLookups` + `db:` citations — Java defaults alone fail `live-config`.
+**Live config:** optional pack `config-sources.json`. Flag-gated claims need `configLookups` + `db:` citations — code defaults alone fail `live-config`.
 
 ## Related
 

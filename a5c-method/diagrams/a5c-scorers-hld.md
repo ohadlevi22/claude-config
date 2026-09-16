@@ -9,7 +9,9 @@
 | Layer | Scorers | File |
 |-------|---------|------|
 | Base (portable) | correctness · code-quality · pr-hygiene | `.a5c/core/base-scorers.json` |
-| Domain (DD) | dd-data-compat · dd-pipeline-fit · java-quality | `.a5c/domains/taboola-deeperdive/scorers.json` |
+| Domain | your overlays | `.a5c/domains/<id>/scorers.json` |
+
+Ask mode uses `.a5c/core/ask-scorers.json` + `domains/<id>/ask-scorers.json`.
 
 ## Each scorer declares
 

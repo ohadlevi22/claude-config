@@ -34,8 +34,8 @@ flowchart TD
 
 Core loop is fixed. Swap **context + scorers** via `.a5c/active-domain.json`:
 
-- `taboola-deeperdive` — Deeper Dive CONTEXT + domain scorers (`dd-data-compat`, `dd-pipeline-fit`)
-- `nvidia` — stub pack (base scorers only)
+- Copy `domains/_template` → `domains/<your-id>`
+- Fill CONTEXT, conventions, skill pointers, optional domain scorers / config-sources
 
 See [`.a5c/processes/README.md`](../.a5c/processes/README.md).
 
@@ -43,15 +43,6 @@ See [`.a5c/processes/README.md`](../.a5c/processes/README.md).
 
 **Base (always):** correctness · code-quality · pr-hygiene  
 
-**Domain (Taboola DD):** dd-data-compat · dd-pipeline-fit · java-quality  
-
-**Skills (always):** architecture · search-engine · data · java-quality · **(optional)** omni-crawl-consumer  
+**Domain:** whatever you declare in `domains/<id>/scorers.json`
 
 Gate: **every** scorer ≥ 90 (no average).
-
-## Feedback asks
-
-1. Is ≥ 90 on every scorer the right bar?  
-2. Are these three scorers the right dimensions?  
-3. Auto-open PR, or local branch until a human asks?  
-4. Max iterations: 3, 5, or leave-desk?

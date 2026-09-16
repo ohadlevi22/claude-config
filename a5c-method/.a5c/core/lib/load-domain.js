@@ -121,7 +121,7 @@ function loadDomain(options = {}) {
     createPr: true,
   });
   const modelPolicy = readJson(path.join(a5cRoot, 'config', 'model-policy.json'), {});
-  const active = readJson(path.join(a5cRoot, 'active-domain.json'), { domain: 'taboola-deeperdive' });
+  const active = readJson(path.join(a5cRoot, 'active-domain.json'), { domain: 'example-domain' });
   const domainId = options.domainId || process.env.A5C_DOMAIN || active.domain;
 
   const packDir = path.join(a5cRoot, 'domains', domainId);

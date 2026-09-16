@@ -57,7 +57,7 @@
       "instructions": [
         "Assess readability, naming, modularity, and consistency with surrounding code",
         "Flag dead code, leaky abstractions, and unnecessary complexity",
-        "Keep this portable: do not apply Taboola-specific Java/Spring rulebooks (domain java-quality owns that)",
+        "Keep this portable: do not apply company-specific language rulebooks (domain scorers own those)",
         "Apply failFast and rubric from this scorer declaration",
         "Give score 0-100 where 90+ means quality is ready for human review",
         "List mustFix items for quality blockers"

@@ -24,14 +24,14 @@ scorers.json entry  →  runScorerTask (review model)  →  { score, findings, m
 
 ```json
 {
-  "id": "dd-data-compat",
+  "id": "data-compat",
   "kind": "agent",
-  "title": "Deeper Dive data compatibility",
+  "title": "Data compatibility",
   "phase": "review",
   "scope": "domain",
-  "skillRefs": ["deeperdive-data"],
+  "skillRefs": ["product-data"],
   "checklistPaths": [
-    "~/.claude/plugins/.../deeperdive-data/modes/review/checklist.md"
+    "path/to/skills/product-data/modes/review/checklist.md"
   ],
   "appliesWhen": "always",
   "failFast": [
@@ -71,7 +71,7 @@ scorers.json entry  →  runScorerTask (review model)  →  { score, findings, m
 
 Scorers and implementers must verify against the **product tree**, not memory.
 
-Declared on the domain pack (`domain.json` → `codebasePath`), e.g. Taboola Deeper Dive → `/Users/ohad.l/work/products`.
+Declared on the domain pack (`domain.json` → `codebasePath`), e.g. `/absolute/path/to/product/repo`.
 
 Injected into every scorer as `context.codebasePath` and as task `workdir`. Correctness (and other scorers) must read/diff real files under that root.
 
@@ -98,9 +98,9 @@ Validated by `core/lib/scorer-contract.js`.
 | Layer | Examples | Rules |
 |-------|----------|--------|
 | **Base** | `correctness`, `code-quality`, `pr-hygiene` | Portable; no company-specific rules |
-| **Domain** | `dd-data-compat`, `dd-pipeline-fit`, `java-quality` | Pack-specific; reference pack skills |
+| **Domain** | `data-compat`, `pipeline-fit`, `lang-quality` | Pack-specific; reference pack skills |
 
-Do **not** put Taboola Java rules in base `code-quality` — that stays in domain `java-quality`.
+Do **not** put company-specific language rules in base `code-quality` — keep those in a domain scorer.
 
 ## What not to put in scorers
 

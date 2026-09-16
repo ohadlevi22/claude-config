@@ -1,5 +1,5 @@
 {
-  "question": "How does QuestionGenerationPipeline choose and call the LLM provider?",
+  "question": "How does the pipeline choose and call the external provider?",
   "targetScore": 90,
   "maxIterations": 4,
   "autoContinue": true

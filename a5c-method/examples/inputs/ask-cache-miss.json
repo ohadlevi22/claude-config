@@ -1,5 +1,5 @@
 {
-  "question": "How does trs-search-engine handle a DeeperDive cache miss for generated questions?",
+  "question": "How does the main entrypoint route a request to the core handler?",
   "targetScore": 90,
   "maxIterations": 4,
   "autoContinue": true
