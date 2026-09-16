@@ -12,6 +12,7 @@ git clone <this-repo> ~/claude-config && cd ~/claude-config && ./bootstrap-claud
 - **`LEFT-BEHIND.md`** — what was deliberately not carried, and why
 - **`portable/`** — 14 skills, 8 agents, `settings.json`, statusline script
 - **`reachy-mini/`** — Reachy Mini ("Ricci") robot pack: 7 skills, dev+ops agent, slash command, Mac-side scripts. Own `install.sh`.
+- **`nvidia-tech-and-business/`** — NVIDIA Networking / DOCA ramp-up notes: component dictionary (what can break in a rack), links to the full nvidia-rampup kit.
 
 No API keys or tokens are stored here. The bootstrap script reads them from the
 environment and skips whatever isn't set.
